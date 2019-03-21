@@ -1,0 +1,19 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Basic.qml</file>
+    </qresource>
+    <qresource prefix="/pics">
+        <file alias="4around.png">pics/4around.png</file>
+        <file alias="fore_camera.png">pics/fore_camera.png</file>
+        <file alias="icon_3_fore_around.png">pics/icon_3_fore_around.png</file>
+        <file alias="icon_3_rear_aound.png">pics/icon_3_rear_aound.png</file>
+        <file alias="icon_4around.png">pics/icon_4around.png</file>
+        <file alias="icon_camera1.png">pics/icon_camera1.png</file>
+        <file alias="icon_camera2.png">pics/icon_camera2.png</file>
+        <file alias="icon_fore_camera.png">pics/icon_fore_camera.png</file>
+        <file alias="icon_left_camera.png">pics/icon_left_camera.png</file>
+        <file alias="icon_rear_camera.png">pics/icon_rear_camera.png</file>
+        <file alias="icon_right_camera.png">pics/icon_right_camera.png</file>
+        <file alias="rear_camera.png">pics/rear_camera.png</file>
+    </qresource>
+</RCC>
