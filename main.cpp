@@ -43,11 +43,21 @@ int main(int argc, char *argv[])
     if (view.status() == QQuickView::Error)
         return -1;
     view.setResizeMode(QQuickView::SizeRootObjectToView);
+    QQuickWindow::setDefaultAlphaBuffer(true);
+    view.setColor(Qt::transparent);
+    view.setFlags(view.flags() | static_cast<Qt::WindowFlags>(Qt::WA_TranslucentBackground)  | static_cast<Qt::WindowFlags>(Qt::WA_NoSystemBackground));
     view.show();
     QQuickItem *object = view.rootObject();
     CameraDataManager dataMgr;
     QObject::connect(object, SIGNAL(showCameraData(int, int)),
                      &dataMgr, SLOT(onCameraData(int, int)));
+
+    /*
+QQuickView view;
+QQuickWindow::setDefaultAlphaBuffer(true);
+view.setColor(Qt::transparent);
+view.setFlags(m_View.flags() |
+              static_cast<Qt::WindowFlags>(Qt::WA_TranslucentBackground));     */
 
     return app.exec();
 }

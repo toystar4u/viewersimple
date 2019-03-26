@@ -28,18 +28,32 @@
 ****************************************************************************/
 
 import QtQuick 2.10
-import QtQuick.Controls 2.2
+import QtQuick.Controls 2.3
 import QtQuick.VirtualKeyboard 2.1
 
 Rectangle {
+    x: 0
+    y: 0
     width: 1280
     height: 720
+    color: "#00FFFFFF"
+    border.color: "#000000"
+    border.width: 1
+
+    Rectangle {
+        x: 0
+        y: 0
+        width: 200
+        height: parent.height
+        color: "#FFFFFF"
+    }
 
     signal showCameraData (int cameraType, int aroundType)
 
     Row {
 
         Column {
+
             spacing: 10
             Button {
                 id: btn_menu
@@ -119,6 +133,12 @@ Rectangle {
                         pane_menu.visible = false;
                         pane_around.visible = false;
                         pane_view.visible = true;
+
+                        if (btn_rear.checked)
+                            canvas_line.visible = true;
+                        else
+                            canvas_line.visible = false;
+
                         showCameraData(btn_fore.checked?1:
                                            btn_rear.checked?2:0, 0)
                     }
@@ -149,6 +169,11 @@ Rectangle {
                     }
                     else
                     {
+                        if (btn_rear.checked)
+                            canvas_line.visible = true;
+                        else
+                            canvas_line.visible = false;
+
                         showCameraData(btn_fore.checked?1:
                                            btn_rear.checked?2:0, 0)
                     }
@@ -182,6 +207,7 @@ Rectangle {
                         source: "pics/icon_fore_camera.png"
                     }
 
+                    /*
                     onCheckedChanged: {
                         if (!checked) {
                             img_around_left.source = "pics/rear_camera.png"
@@ -191,6 +217,7 @@ Rectangle {
                             img_camera.source = "pics/fore_camera.png"
                         }
                     }
+                    */
                 }
                 Button {
                     id: btn_rear
@@ -215,6 +242,7 @@ Rectangle {
                         source: "pics/icon_rear_camera.png"
                     }
 
+                    /*
                     onCheckedChanged: {
                         if (checked) {
                             img_around_left.source = "pics/rear_camera.png"
@@ -224,25 +252,30 @@ Rectangle {
                             img_camera.source = "pics/fore_camera.png"
                         }
                     }
+                    */
                 }
             }
         }
 
-        Pane {
+        Rectangle {
             id: pane_menu
             x: 206
             y: 0
             width: 1080
             height: 720
             visible: false
+            //color: "#00FFFFFF"
+            border.color: "#000000"
+            border.width: 1
 
-            Pane {
+            Rectangle {
                 id: pane_around_view
                 x: 73
                 y: 166
                 width: 910
                 height: 448
                 visible: true
+                color: "#00FFFFFF"
 
                 ButtonGroup {
                     buttons: around_view_btns.children
@@ -264,7 +297,7 @@ Rectangle {
                         spacing: 5
                         Button {
                             id: btn_4_around_view
-                            width: 300
+                            width: 940
                             height: 85
                             text: "4 Around View"
                             checkable: true
@@ -279,7 +312,7 @@ Rectangle {
                             Image {
                                 anchors.verticalCenter: parent.verticalCenter
                                 anchors.horizontalCenter: parent.horizontalCenter
-                                anchors.horizontalCenterOffset: -100
+                                anchors.horizontalCenterOffset: -200
                                 width: 70
                                 height: 70
                                 fillMode: Image.PreserveAspectFit
@@ -288,7 +321,7 @@ Rectangle {
                         }
                         Button {
                             id: btn_fore_3_around_view
-                            width: 300
+                            width: 940
                             height: 85
                             text: "Fore 3 Around View"
                             checkable: true
@@ -302,7 +335,7 @@ Rectangle {
                             Image {
                                 anchors.verticalCenter: parent.verticalCenter
                                 anchors.horizontalCenter: parent.horizontalCenter
-                                anchors.horizontalCenterOffset: -100
+                                anchors.horizontalCenterOffset: -200
                                 width: 65
                                 height: 70
                                 fillMode: Image.PreserveAspectFit
@@ -311,7 +344,7 @@ Rectangle {
                         }
                         Button {
                             id: btn_rear_3_around_view
-                            width: 300
+                            width: 940
                             height: 85
                             text: "Rear 3 Around View"
                             checkable: true
@@ -325,7 +358,7 @@ Rectangle {
                             Image {
                                 anchors.verticalCenter: parent.verticalCenter
                                 anchors.horizontalCenter: parent.horizontalCenter
-                                anchors.horizontalCenterOffset: -100
+                                anchors.horizontalCenterOffset: -200
                                 width: 65
                                 height: 70
                                 fillMode: Image.PreserveAspectFit
@@ -334,6 +367,7 @@ Rectangle {
                         }
                     }
 
+                    /*
                     Image {
                         id: img_around_view
                         width: 250
@@ -343,19 +377,24 @@ Rectangle {
                         fillMode: Image.Stretch
                         source: "pics/4around.png"
                     }
+                    */
                 }
             }
 
         }
 
-        Pane {
+        Rectangle {
             id: pane_around
             x: 206
             y: 0
             width: 1080
             height: 720
+            //contentHeight: -2
+            //spacing: -2
             visible: false
+            color: "#00FFFFFF"
 
+            /*
             Row {
                 Image {
                     id: img_around_left
@@ -373,21 +412,100 @@ Rectangle {
                     source: "pics/4around.png"
                 }
             }
+            */
         }
 
-        Pane {
+        Rectangle {
             id: pane_view
             x: 206
             y: 0
             width: 1080
             height: 720
+            color: "#00FFFFFF"
 
+            /*
             Image {
                 id: img_camera
                 width: pane_around.width - 20
                 height: pane_around.height - 20
                 fillMode: Image.Stretch
                 source: "pics/fore_camera.png"
+            }
+            */
+
+            Canvas {
+                id: canvas_line
+                width: pane_around.width - 20
+                height: pane_around.height - 20
+                visible: false
+
+                onPaint: {
+                    var ctx = canvas_line.getContext('2d');
+
+                    //ctx.strokeStyle = Qt.rgba(0, 1, 0, 1);
+                    ctx.lineCap = "round";
+                    ctx.globalAlpha = 0.7;
+                    ctx.lineWidth = 15;
+                    /*
+                    ctx.strokeStyle = "red";
+                    ctx.lineWidth = 15;
+                    ctx.beginPath();
+                    ctx.moveTo(20,0);
+                    ctx.lineTo(100, 100);
+                    ctx.stroke();
+                    ctx.closePath();
+                    ctx.beginPath();
+                    ctx.lineWidth = 15;
+                    ctx.strokeStyle = "green";
+                    ctx.moveTo(100,100);
+                    ctx.lineTo(200, 200);
+                    ctx.stroke();
+                    */
+                    var startLeft = 200;
+                    var startRight = width - startLeft;
+                    var startHeight = height;
+
+                    ctx.strokeStyle = "green";
+                    ctx.beginPath();
+                    ctx.moveTo(startLeft, startHeight);
+                    ctx.lineTo(startLeft+50, startHeight-100);
+                    ctx.lineTo(startLeft+50+100, startHeight-100);
+                    ctx.moveTo(startRight, startHeight);
+                    ctx.lineTo(startRight-50, startHeight-100);
+                    ctx.lineTo(startRight-50-100, startHeight-100);
+                    ctx.stroke();
+                    ctx.closePath();
+
+                    startLeft = startLeft+50;
+                    startRight = startRight-50;
+                    startHeight = startHeight-100;
+
+                    ctx.strokeStyle = "yellow";
+                    ctx.beginPath();
+                    ctx.moveTo(startLeft, startHeight);
+                    ctx.lineTo(startLeft+50, startHeight-100);
+                    ctx.lineTo(startLeft+50+100, startHeight-100);
+                    ctx.moveTo(startRight, startHeight);
+                    ctx.lineTo(startRight-50, startHeight-100);
+                    ctx.lineTo(startRight-50-100, startHeight-100);
+                    ctx.stroke();
+                    ctx.closePath();
+
+                    startLeft = startLeft+50;
+                    startRight = startRight-50;
+                    startHeight = startHeight-100;
+
+                    ctx.strokeStyle = "red";
+                    ctx.beginPath();
+                    ctx.moveTo(startLeft, startHeight);
+                    ctx.lineTo(startLeft+50, startHeight-100);
+                    ctx.lineTo(startLeft+50+100, startHeight-100);
+                    ctx.moveTo(startRight, startHeight);
+                    ctx.lineTo(startRight-50, startHeight-100);
+                    ctx.lineTo(startRight-50-100, startHeight-100);
+                    ctx.stroke();
+                    ctx.closePath();
+                }
             }
         }
     }
